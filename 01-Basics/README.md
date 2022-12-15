@@ -109,3 +109,15 @@ If the stdin is input from the keyboard then text is read in because the keys ge
 - If you want to store that as a numerical value rather than a string, your program has to convert the string character by character to a numerical value and this is the job of the scanf function.
 
 Like printf(), scanf() uses a control string followed by a list of arguments. Control string indicates the destination data types for the input stream of characters.
+The scanf() function uses pointers to variables.
+
+Remember these 3 rules about scanf:
+- Returns the number of items that it successfully reads.
+- If you use scanf() to read a value for one of the basic variable types we've discussed, precede the variable name with an '&'. 
+- If you use scanf() to read a string into a character array, don't use an '&'.
+
+The scanf() function uses whitespace (newlines, tabs, and spaces) to decide how to divide the into into separate fields.
+
+It is the inverse of printf(), which converts integers, floating-point numbers, characters, and C strings to text that is to be displayed onscreen.
+
+When a program uses scanf to gather input from the keyboard, it waits for you to input some text. When you enter some text and press enter, then the program proceeds to read the input.

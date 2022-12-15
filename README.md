@@ -43,6 +43,21 @@ By the late 1979s, C had evolved into what is now referred to as "traditional C"
 
 - The current standard is commonly referred to as C11. Some elements of the language as defined by C11 are optional. It is also possible that a C11 compiler may not implement all of the language features mandated by the C11 standard. This class will base its examples and concepts off C11.
 
+# Language Features
+C produces compact and efficient programs. It is one of the most important programming languages and will continue to be so.
+
+Its main features are:
+- **Efficient**: It takes advantages of the capabilities of current computers. C programs are compact and fast (similar to assembly language programs). Programmers can fine-tune their programs for maximum speed or most efficient use of memory.
+- **Portable**: Programs written on one system can be run on other systems with little or no modification. Compilers are available for many computer architectures. Linux/Unix systems typically come with a C compiler as part of the package.
+- **Powerful and Flexible**: The Unix/Linux kernel is written in C. Many compilers and interpreters for other languages (FORTRAN, Perl, Python, Pascal, LISP. Logo, and BASIC) have been written in C.
+C programs have also been used for solving physics and engineering problems and even for animating special effects for movies. It is used for developing just about everything you can image by way of a computer program. It is the basis for more advanced languages, such as C++.
+- **Programmer Oriented**: C fulfills the needs of programmers. It gives you access to hardware and enables you to manipulate individual bits in memory. C gives you more freedom, but it also puts more responsibility on you.
+
+## Disadvantages
+- Flexibility and freedom also requires added responsibility. The use of pointers is problematic and abused.
+
+- Sometimes because or its wealth of operator and its conciseness, it makes the language difficult to read and follow. There is an opportunity to write obscure code.
+
 # Compilers
 A compiler is a program that translates the high lvel language source code into the detailed set of machine language instructions the computer requires. The program does the high level thinking and the compiler generates the tedious instructions to the cpu.
 
