@@ -162,3 +162,105 @@ Truth Table
 | 0 | 1 | 0 | 1 | 1 |
 | 1 | 1 | 1 | 1 | 0 |
 | 1 | 0 | 0 | 1 | 1 |
+
+## The cast and sizeof operators
+### Type conversions
+Conversion of between different types can happen automatically (implicit conversion) by the language or explicit by the program. To effectively develop C programs, you must understand the rules used for the implicit conversion of floating-point and integer values in C.
+We are often going to have integers and floating point numbers, and we are going to be intermixing them sometimes. For these situations, we should know how things are being converted. We should not mix types. Remember, C is flexible, it gives us a lot of freedom, but we should not abuse it.
+
+* Whenever a floating point value is assigned to an integer variable in C, the decimal portion of the number gets truncated.
+
+~~~c
+int x = 0;
+float f = 12.125;
+x = f; // value stored in x is the number 12
+~~~
+
+* Assigning an integer variable to a floating variable, it does not cause any change in the value of the number. The value is converted by the system and stored in the floating variable.
+
+* When performing integer arithmetic: if two operands in an expression are integers then any decimal portion resulting from a division operation is discarded, even if the result is assigned to a floating variable.
+if one operand is an int and the other is a float then the operation is performed as a floating point operation. This is an impĺicit conversion.
+
+### Cast operator
+As mentioned, we should usually steer clear of automatic type conversions, especially of demotions, as it is better to do an explicit conversion.
+
+It is possible for us to demand the precise type conversion. This is called a cast and consists of preceding the quantity with the name of the desired type in parentheses. 
+Parentheses and type name together constitute a cast operator, i.e., (type).
+
+The type cast operator has a higher precedence than all the arithmetic operators except the unary minus and unary plus.
+
+~~~c
+(int) 21.51 + (int) 26.99 // 21 + 26
+~~~
+
+Usually, we don't cast to a more precise type because we are not going to get more precise. We cast from a more precise type to a less precise.
+
+
+### sizeof operator
+You can find out how many bytes are occupied in memory by a given type by using the `sizeof` operator. This is evaluated at compile time and not at runtime, unless a variable-length array is used in its argument.
+The argument to the sizeof operator can be a variable, an array name, the name of a basic data type, the name of a derived data type, or an expression.
+
+`sizeof(int)` will result in the number of bytes occupied by a variable of type int.
+
+We can also apply the sizeof operator to an expression. The result is the size of the value that results from  evaluating the expression.
+
+This operator will come into play a lot more when we talk about pointers, because then we are calculating how much memory to allocate (which is what pointers are), we use sizeof to be precise.
+
+### ? Operator
+This is the ternary operator. Is a way to write if/else statements in one line.
+The structure goes like this.
+~~~
+If Condition is true ? then value X : otherwise value Y
+~~~
+
+## Operator precedence
+Operator precedence determines the grouping of terms in an expression and decides how an expression is evaluated. It dictates the order of evaluation when two operators share an operand.
+
+~~~c
+x = 7 + 3 * 2; // equals 13, not 10 
+~~~
+
+In this last case, multiplication precedes addition.
+
+C provides specificrules for choosing what is the precedence of operators. Each operator is assigned a precedence level.
+
+Whenever an operation is enclosed in parentheses, it will be executed first, as in the mathematical language.
+
+### Associativity
+What if two operators have the same precedence? Then associativity rules are applied.
+If they share an operand, they are executed according to the order in which they occur in the statement. For most operators, the order is from left to right.
+
+~~~c
+1 == 2 != 3
+~~~
+
+operators `==` and `!=` have the same precedence. Associativity of both `==` and `!=` is left to right.
+
+~~~c 
+((1 == 2) != 3)
+(1 == 2) // false (0)
+(0 != 3) // true
+~~~
+
+### Table (highest to lowest)
+
+| Category | Operator | Associativity |
+|:---:|:---:|:---:|
+| Postfix | ()[]->. ++ -- | left to right |
+| Unary | + - ! ~ ++--(type)*& sizeof | right to left |
+| Multiplicative | * / % | left to right |
+| Additive | + - | left to right |
+| Shift | 0 | left to right |
+| Relational | < <= > >= | left to right |
+| Equality | == != | left to right |
+
+| Category | Operator | Associativity |
+|:---:|:---:|:---:|
+| Bitwise AND | & | left to right |
+| Bitwise XOR | ^ | left to right |
+| Bitwise OR | \| | left to right |
+| Logical AND | && | left to right |
+| Logical OR | \|\| | left to right |
+| Conditional | ?: | right to left |
+| Assignment | = += -= *= /= %= >>= <<= &= ^= \|=| right to left |
+| Comma | , | left to right |
