@@ -73,6 +73,10 @@ int main()
             }
         }
     }
+    else 
+    {
+        taxAmount = grossPay / 100 * first300Pg;
+    }
     
     netPay = grossPay - taxAmount;
     printf("Tax amount: $%.2f\n",taxAmount);
