@@ -52,14 +52,14 @@ int main(void)
         }
     }
 
-    printf("Here are the prime numbers: ");
-    for(int i = 0; i < primesLength; i++)
+    printf("Here are the prime numbers:\n");
+    for(int i = 0; i < primesIndex; i++)
     {   
         if(primes[i] == 0)
         {
             break;
         }
-        printf("%d ", primes[i]);
+        printf("%d\n", primes[i]);
     }
     printf("\n");
 }
