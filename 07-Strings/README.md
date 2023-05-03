@@ -103,3 +103,67 @@ if(string1 == string2) // WRONG
 
 the equality operator can only be applied to simple variables types, such as floats, ints, or chars. It does not work on structures or arrays.
 To determine if two strings are equal, we must explicitly compare the two chacter strings character by character. We will later use the `strcmp` function.
+
+## Constant String
+The preprocessor let us define constants
+
+~~~c
+#define OOPS "Now you have done it!"
+~~~
+
+C90 added a second way to create symbolic constants. Using the const keyword yo convert a declaration for a variable into a declaration for a constant.
+
+~~~c
+const int MONTHS = 12; // MONTHS is a symbolic constant for 12
+~~~
+
+`const` is a newer approach and is more flexible than using `#define`.
+- it lets you declare a type.
+- it allows better control over which parts of a program can use the constant.
+
+Initializing a char array and declaring it as constant is a good way of handling standard messages.
+
+~~~c
+const char message[] = "The end is nigh";
+~~~
+
+# Common String Functions
+C provides many functions specifically designed to work with strings.
+- strlen: returns length of a string, as a size_t.
+This functions does change the stirng. The function header does not use const in declaring the formal parameter string.
+
+- strcpy() and strncpy(): copying one character string into another.
+Since you can not assign arrays in C, you can not assign strings either. We can use the strcpy() function to copy a stirntg to an existing string.
+This is the string equivalent of the assignment operator.
+~~~c
+char s[100]; // declare
+s = "Hello"; // initialize- DOES NOT WORK
+~~~
+The strcpy function does not check to see whether the source string actually fits in the target string. The safer way to copy strings is to use strncpy().
+strncpy takes a third argument, the maximum number of characters to copy.
+~~~c
+char src[40];
+char dest[12];
+
+// Setting the size of the data inside destination to null terminators.
+// That way when you add something it will automatically be there.
+memset(dest, '\0', sizeof(dest)); 
+
+strcpy(src, "Hello how are you doing");
+strncpy(dest, src, 10);
+~~~
+
+
+- strcat() and strncat(): combining two character strings together (concatenation). This alters the second string. 
+    The function strcat() does not check to see whether the second string will fit in the first array. If you fail to allocate enough space for the first array, you will run into problems as excess characters overflow into adjacent memeory locations.
+    We should use strncat() instead. This function takes a third argument indicating the maximum number of characters to add.
+    For example, strncat(bugs, addon, 13) will add the contents of the addon string to bugs stopping when it reaches 13 additional characters or the null character, whichever comes first.
+- strcmp() and strncmp(): determining if two character strings are equal. We cannot use `==`, as this will only check to see if the string has the same memory address.
+    - strcmp() does not compare arrays, so it can be used to compare strings stored in arrays of different sizes. 
+    - It does not compare characters: We can use arguments such as "A" and "apples", but we cannot use character arguments, such as 'A'.
+    - This functions does for strings what relational operators do for numbers.
+        - It returns 0 if its two string arguments are the same and nonzeor otherwise.
+        - It returns value < 0 when indicating str1 is less than str2.
+        - It returns value > 0 when indicating str2 is less than str1. 
+
+The C library supplies these string handling function prototypes in the string.h header file.
