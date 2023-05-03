@@ -158,12 +158,21 @@ strncpy(dest, src, 10);
     The function strcat() does not check to see whether the second string will fit in the first array. If you fail to allocate enough space for the first array, you will run into problems as excess characters overflow into adjacent memeory locations.
     We should use strncat() instead. This function takes a third argument indicating the maximum number of characters to add.
     For example, strncat(bugs, addon, 13) will add the contents of the addon string to bugs stopping when it reaches 13 additional characters or the null character, whichever comes first.
-- strcmp() and strncmp(): determining if two character strings are equal. We cannot use `==`, as this will only check to see if the string has the same memory address.
-    - strcmp() does not compare arrays, so it can be used to compare strings stored in arrays of different sizes. 
+- `strcmp()` and `strncmp()`: determining if two character strings are equal. We cannot use `==`, as this will only check to see if the string has the same memory address.
+    - `strcmp()` does not compare arrays, so it can be used to compare strings stored in arrays of different sizes. 
     - It does not compare characters: We can use arguments such as "A" and "apples", but we cannot use character arguments, such as 'A'.
     - This functions does for strings what relational operators do for numbers.
         - It returns 0 if its two string arguments are the same and nonzeor otherwise.
         - It returns value < 0 when indicating str1 is less than str2.
-        - It returns value > 0 when indicating str2 is less than str1. 
+        - It returns value > 0 when indicating str2 is less than str1.
+    - the `strcmp()` function compares strings until it finds corresponding characters that differ. It could take the search to the end of one of the strings.
+
+    - `strncmp()` compares the string until they differ or until it has compared a number of characters specified by a third argument.
+    ~~~c
+    if(strncmp("astronomy", "astro", 5) == 0)
+    {
+        printf("Found: astronomy");
+    }
+    ~~~
 
 The C library supplies these string handling function prototypes in the string.h header file.
