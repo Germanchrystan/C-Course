@@ -176,3 +176,24 @@ strncpy(dest, src, 10);
     ~~~
 
 The C library supplies these string handling function prototypes in the string.h header file.
+
+### Searching a string
+The string.h header declares several string-searching functions for finding a single character or substring: 
+
+#### strchr()
+This function searches a given string for a specified character. First argument to the function is the string ot be searched (which will be the address of a char array). Second argument is the character that you are looking for. The functions expects this second argument to be of type int, so the compiler will convert the value of ch to this type.
+The function will search the string starting at the beginning and return a pointer to the first position in the string where the character is found (`char*`). If the character is not found, the function returns a special value `NULL`, which is the equivalent of 0 for a pointer, and represents a pointer that does not point ot anything.
+
+
+#### strstr()
+This is probably the most useful of all the searching functions. It searches one string for the first occurrence of a substring, and returns the pointer to the position in the first string where the substring was found. If the substring is not found, the function returns `NULL`.
+
+### Tokenizing a string
+A token is a sequence of characters within a string that is bounded by a delimiter (space, comman, period, etc.). A delimiter can be anything, but, should be unique to the string. Breaking a sentence into words is called tokenizing. 
+#### strtok()
+This function is used for tokenizing a string. It requires two arguments: a string to be tokenized, and a string containing all the possible delimiter characters.
+
+
+Analizying strings
+- lslower(), isupper(), isalpha(), isdigit(), etc.
+
