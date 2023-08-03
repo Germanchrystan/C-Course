@@ -74,4 +74,3 @@ horoscope searchHoroscope(int month, int day)
   }
   horoscope nullHoroscope = {"", {0, 0}, {0, 0}};
   return nullHoroscope;
-}
