@@ -117,3 +117,64 @@ today = (struct date){.month = 9, .day=25, .year = 2015};
 ~~~
 
 The advantage of using this approach is that the arguments can appear in any order.
+
+## Struct arrays
+The concept of an array of strcutrures is a very powerful and important one in C. Declaring an array of structures is like declaring any other kind of array.
+
+~~~c
+struct date myDates[10];
+~~~
+
+This defines an array called myDates, which consists of 10 elements.
+To identify members of an array of structures, we apply the same rule used for individual structures.
+Referencing a particular structure element inside the array is quite natural.
+
+~~~c
+myDates[1].month = 8;
+myDates[1].day = 8;
+myDates[1].year = 1943;
+~~~
+
+Initialization of array containing structures is simimlar to initialization of multidimensional arrays.
+~~~c
+struct date myDates[5] = {{12, 10, 1975}, {12, 30, 1980}, {11, 15, 2005}};
+~~~
+
+This sts tyhe firsy three dates in the array.
+The inner pairs of braces are optional.
+
+~~~c
+structy date myDates[5] = { 12, 10, 1975, 12, 30, 1980, 11, 15, 2005 };
+~~~
+This is just example sets the array just like the previous example, but it is harder to read.
+
+We can also initial one of the elements of the array, without specifying the previous ones.
+
+~~~c
+struct date myDates[5] = { [2] = {12, 10, 1975}};
+~~~~
+
+~~~c
+struct date myDates[5] = {[1].month = 12, [1].day = 30} 
+~~~
+
+## Arrays in structs
+It is also possible to define structures that contain arays as members. Most common use is to set up an array of characters inside a structure
+
+~~~c
+struct month
+{
+    int numberOfDays;
+    char name[3];
+}
+
+struct month aMonth;
+aMonth.numberOfDays = 31;
+aMonth.name[0] = 'J';
+aMonth.name[0] = 'A';
+aMonth.name[0] = 'N';
+
+struct month Feb = { 31, { 'F', 'E', 'B'}};
+
+struct month months[12];
+~~~
