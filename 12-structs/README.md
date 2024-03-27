@@ -178,3 +178,59 @@ struct month Feb = { 31, { 'F', 'E', 'B'}};
 
 struct month months[12];
 ~~~
+
+## Nested structures
+C allows us to define a structure that itself contains other structures ans one ofr more of its members. 
+~~~c
+struct date 
+{
+    int day;
+    int year;
+    int month;
+}
+
+struct time
+{
+    int hours;
+    int minutes;
+    int seconds;
+}
+
+struct dateAndTime
+{
+    struct date sdate;
+    struct time stime;
+}
+
+~~~
+
+It is also possible to set up an array of dateAndTime
+
+~~~c
+struct dateAndTime events[100];
+events[0].stime.hour = 12;
+events[0].stime.minutes = 0;
+events[0].stime.seconds = 0;
+~~~
+
+## Declaring a structure within a structure
+We can define the Date structure within the time structure definition.
+~~~c
+struct Time
+{
+    struct Date
+    {
+        int day;
+        int month;
+        int year;
+    } dob;
+
+    int hour;
+    int minutes;
+    int seconds;
+}
+
+~~~
+
+The struct Date is going to be defined in there within the Time struct.
+The declaration is enclosed within the scope of the Time structure definition. It does not exist outside of it.
