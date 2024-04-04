@@ -234,3 +234,69 @@ struct Time
 
 The struct Date is going to be defined in there within the Time struct.
 The declaration is enclosed within the scope of the Time structure definition. It does not exist outside of it.
+
+## Declaring a struct as a pointer
+We can define a variable to be a pointer to a struct
+
+~~~c
+struct date *datePtr;
+~~~
+
+The variable datePtr can be assigned just like other pointes. We can set it to point to `todaysDate` with the assignment statement.
+
+~~~c
+datePtr = &todaysDate;
+~~~
+
+We can then indirectly access any of the members of the date structure pointed to by datePtr.
+
+~~~c
+(*datePtr).day=21;
+~~~
+
+The above has the effect of setting the day of the date structure pointed to by datePtr to 21.
+Parentheses are required because the structure member operator `.` has higher precedence than the indirection operator `*`.
+
+Pointers to structures are so often used in C that a special operator exists.
+The structure pointer operator `->`, which is the dash followed by the greater sign, allows to access a member without having to dereference a pointer to a struct.
+
+`(*x).y` can be cleary expressed as `x->y`.
+
+## Structures containing pointers
+A pointer can also be a member of a structure.
+
+~~~c
+struct intPtrs
+{
+    int *p1;
+    int *p2;
+}
+
+~~~
+
+## Character arrays or character pointers?
+
+~~~c
+struct names
+{
+    char first[20];
+    char last[20];
+}
+~~~
+
+~~~c
+struct pnames
+{
+    char * first;
+    char * last;
+}
+~~~
+
+We can do both, however, we need to understand what is happening here.
+
+~~~c
+struct names veep = { "Talia", "Summers"};
+struct pnames treas = {"Brad", "Fallingjaw"};
+printf("%s and %s\n", veep.first, treas.first);
+~~~
+
