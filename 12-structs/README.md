@@ -300,3 +300,28 @@ struct pnames treas = {"Brad", "Fallingjaw"};
 printf("%s and %s\n", veep.first, treas.first);
 ~~~
 
+
+In the first struct `names`, the strings are stored inside the structure. The struct has allocated a total of 40 bytes to hold the two names. We are allocating 40 bytes to hold those two names (20 and 20).
+
+In the second struct `pnames`, the strings are stored wherever the compiler stores string constants. The structure does not allocate memory for the strings, it only holds two pointers, which in most systems take 8 bytes each. It can be used only with strings that have had space allocated for them elsewhere. 
+Whenever we have pointers inside of a structure, we have to use `malloc` or `calloc`.
+Otherwise, they could be stored wherever string constants are stored.
+
+The pointers in a pnames structure should be used only to manage strings that were created and allocated elsewhere in the program.
+
+One instance in which it does make sense to use a pointer in a structure to handle a string is if you are dynamically allocating that emmory. It has the advantage that we can ask malloc() to allocate just the amount of space that is needed for a string.
+
+~~~c
+struct namect 
+{
+    char * fname;
+    char * lname;
+    int letters;
+}
+
+~~~
+
+The two strings are not stored in the structure, they are stored in the chunk of memory managed by malloc().
+Addresses are what string handling functions typically work with.
+
+
