@@ -324,4 +324,70 @@ struct namect
 The two strings are not stored in the structure, they are stored in the chunk of memory managed by malloc().
 Addresses are what string handling functions typically work with.
 
+## Structures as arguments to functions
+After declaring a structure named Family, how do we pass this structure as an argument to a function?
+~~~c
+struct Family
+{
+    char name[20];
+    int age;
+    char father[20];
+    char mother[20];
+}
+bool siblings(structy Family member1, struct Family member2)
+{
+    return strcmp(member1.mother, member2.mother) == 0;
+}
+~~~
 
+## Pointers to Structures as function arguments
+We should use a pointer to a structure as an argument. It can take quite a bit of time to copy laege structures as arguments, as well as requiring whatever amount of memory to store the copy of the structure.
+Pointers to structures avoid the memory consumption and the copying time. Only a copy of the pointer argument is made.
+
+~~~c
+bool siblings(struct Family *pmember1, struct Family *pmember2)
+{
+    return strcmp(member1->mother, member2->mother) == 0;
+}
+~~~~
+
+We can also use the const modifier to not allow any modification of the members of the struct
+
+~~~c
+bool siblings(struct Family const *pmember1, struct Family const *pmember2 )
+{
+    return strcmp(member1->mother, member2->mother) == 0;
+}
+~~~
+
+We can also use the const modifier to not allow any modification of the pointers address.
+Any attempt to change those structures will cause an error message during compilation.
+
+~~~c
+bool siblings(struct Family *const pmember1, struct Family *const pmember2)
+{
+    return strcmp(member1->mother, member2->mother) == 0;
+}
+~~~
+
+The indirection operator in each parameter definition is now in front of the const keyword, not in front of the parameter name. We cannot modigy the addresses stored in the pointers. The pointers are protected here, not the structures to which they point.
+
+## Returning a structure from a function.
+The function prototype has to indicate this return value in the normal way.
+
+~~~c
+struct Date my_fun(void);
+~~~
+
+This is a prototype for a function taking no arguments that returns a structure of type Date.
+It is often more convenient to return a pointer to a structure. When returning a pointer to a structure, it should be created on the heap.
+
+
+### Reminder
+We should always use pointers when passing structures to a function. It works on older as well as newer C implementations. Some old C implementations don't allow to pass structs as arguments, but they do allow to pass pointers to structs.
+
+However, we have less protection for the data. Some operations in the called function could inadvertently affect data in the original structure. For that we use **const** qualifiers.
+
+We can also pass structures as arguments. The functions works with copies of the original data, which is safer, and the programming style tends to be clearer.
+The disadvantages of thay is that it wastes time and memory, specially when dealing with large structures to a function that uses only one or two members.
+The other disadvantage, as mention early is that not all C versions allow this.
