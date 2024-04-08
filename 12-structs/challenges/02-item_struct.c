@@ -58,7 +58,7 @@ void readItem(struct item * i)
 
   printf("Ingrese cantidad del item: ");
   scanf("%i", &i->quantity);
-  i->amount = i->quantity * i->price;
+  i->amount = (float)i->quantity * i->price;
 }
 
 void printItem(struct item * i)
