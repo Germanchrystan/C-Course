@@ -166,3 +166,18 @@ remove("myfile.txt");
 This will delete the file that has the name myfile.txt from the current directory. The file cannot be open when we try to delete it.
 
 We should always double check with operations that delete files. We could wreck our system if we do not.
+
+## Reading characters from a text file
+the `fgetc()` functions reads a character from a text file that has been opened for reading.
+This takes a file pointers as its only argument and returns the character read as type int.
+
+~~~c
+int mchar = fgetc(pfile); // Reads a character into mchar with pfile 
+~~~
+
+The return type is int because `EOF` will be returned if the end of the file has been reached.
+
+The function `getc()` which is wequivalent to `fgetc()`, is also available. It requires an argument of type `FILE*` and returns the characer read as type int.
+It is virtually identical to `fgetc()`, except `getc()` may be implemented as a *macro*, whereas `fgetc()` is a function.
+
+We can read the contents of a file again when necessary. The `rewind()` function positions the file that is specified by the file pointer argument at the beginning.
