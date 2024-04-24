@@ -181,3 +181,16 @@ The function `getc()` which is wequivalent to `fgetc()`, is also available. It r
 It is virtually identical to `fgetc()`, except `getc()` may be implemented as a *macro*, whereas `fgetc()` is a function.
 
 We can read the contents of a file again when necessary. The `rewind()` function positions the file that is specified by the file pointer argument at the beginning.
+
+## Reading a string from a text file
+We can use the `fgets()` function to read from any file or stream.
+
+~~~c
+char *fgets(char *str, int nchars, FILE *stream);
+~~~
+
+The function read a string into the memory area pointed to by `str`, from the file specified by stream. Characters are read until either a `\n` is read or nchars - 1 characters have been read from the stream, whichever occurs first.
+
+If a newline character is read, it is retained in the string. A `\O` character will be appended to the end of the string. If tere is no error, `fgets()` returns the pointer, str. If there is an error `NULL` is returned. Reading `EOF` also causes `NULL` to be returned.
+
+
