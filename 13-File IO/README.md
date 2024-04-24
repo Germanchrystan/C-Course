@@ -66,3 +66,12 @@ The second argument to the fopen() function is a character string that represent
 Assuming the call to `fopen()` is successful, te function returns a pointer of type `FILE*` that we can use to reference the file in further input/output operations using other functions in the ibrary.
 If the file cannot be opened for some reason, `fopen()` returns `NULL`.
 
+| Mode | Description                                                                                                                                        |
+| ---- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| "w"  | Open a text file for write operations. If the file exists, its current contents are discarded.                                                     |
+| "a"  | Open a text file for append operations. All writes are to the end of the file.                                                                     |
+| "r"  | Open a text file for read operations.                                                                                                              |
+| "w+" | Open a text file for update (reading and writing), first truncating the file to zero length if it exists or creating the file if it doesn't exist. |
+| "a+" | Open a text file for update (reading and writing) appending to the end of the existing file, or creating the file if it does not yet exist.        |
+| "r+" | Open a text file for update (for both reading and writing).                                                                                        |
+
