@@ -75,3 +75,94 @@ If the file cannot be opened for some reason, `fopen()` returns `NULL`.
 | "a+" | Open a text file for update (reading and writing) appending to the end of the existing file, or creating the file if it does not yet exist.        |
 | "r+" | Open a text file for update (for both reading and writing).                                                                                        |
 
+
+## Write mode
+If you want to write to an existing text file with the name `myfile.txt`
+
+~~~c
+FILE *pfile = NULL;
+char *filename = "myfile.text";
+pfile = fopen(filename, "w"); // Open myfile.txt to write it
+
+if(pfile != NULL)
+{
+    printf("Failed to open %s.\n", filename);
+}
+
+~~~
+
+This opens the file and associates the file with the name `myfile.txt` to the file pointer `pfile`. The mode as `"w"` means we can only write to the file, we cannot read it. If a file with the name `myfile.txt` does not exist, the call to `fopen()` will create a new file with this name.
+
+If we only provide the file name without any path specification, the file is assumed to be in the current directory. We can also specify a string that is the full path and name for the file.
+
+On opening a file for writing, the file length is truncated to zero and the position will be at the beginning of any existing data for the first operation. Any data that was previously written to the file will be lost and overwritten by any write operations.
+
+## Append mode
+If we want to add to an existing text file rather than overwrite it, we can use the append mode.
+
+~~~c
+pFile = fopen("myfile.txt", "a"); // open myfile.txt to add to it
+~~~
+
+**Don't forget that we should always test the return value for null each time**
+
+When we open a file in append mode all write operations will be at the end of the data in the file on each write operation. All write operations append date to the file and we cannot update the existing contents in this mode.
+
+## Read mode
+If we want to read a file.
+
+~~~c
+pFile = fopen("myfile.txt", "r");
+~~~
+
+This positions the file to the beginning of the data. The file must already exist, if it doesn't it will return NULL.
+
+
+## Renaming a file
+Renaming a file is very easy. Just use the `rename()` function.
+
+~~~c
+int rename(const char *oldname, const char *newname);
+~~~
+
+The integer that is returned will be 0 if the name change was successful and nonzero otherwise.
+
+The file must not be open when we call `rename()`. Otherwise the operation will fail.
+
+~~~c
+if(rename("C:\\temp\\myfile.txt","C:\\temp\\myfile_copy.txt"))
+    printf("Failed to rename file");
+else
+    printf("File renamed successfully");
+~~~
+
+
+## Closing a file
+When we have finished with a file, we need to tell the operating system so that it can free up the file. We can do this by calling the `fclose()` function.
+
+`fclose()` accepts a file pointer as an argument. Returns `EOF` (int) if an error occurs. This is a special character called the *end of file* character. Defined in stdio.h as a negative integer that is usually equivalent to the value -1.
+If the operation is successful the function will return 0.
+
+~~~c
+fclose(pfile);
+pfile = NULL;
+~~~
+
+The result of calling `fclose()` is that the connection between the pointer, `pfile`, and the physical file is broken. `pfile` can no longer be used to access the file.
+
+If the file was being written, the current contents of the output buffer are written to the file to ensure that data is not lost.
+
+It is a good programming practice to close a file as soon as we have finished with it. This prevents output data loss.
+
+We must also close a file before attempting to rename it or remove it.
+
+## Deleting a file
+We can delete a file by invoking the `remove()` function, declared in stdio.h.
+
+~~~c
+remove("myfile.txt");
+~~~
+
+This will delete the file that has the name myfile.txt from the current directory. The file cannot be open when we try to delete it.
+
+We should always double check with operations that delete files. We could wreck our system if we do not.
