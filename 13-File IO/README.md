@@ -193,4 +193,8 @@ The function read a string into the memory area pointed to by `str`, from the fi
 
 If a newline character is read, it is retained in the string. A `\O` character will be appended to the end of the string. If tere is no error, `fgets()` returns the pointer, str. If there is an error `NULL` is returned. Reading `EOF` also causes `NULL` to be returned.
 
+## Reading formatted input from a file
+We can get formatted input from a file by using the standard `fscanf()` function
+
+
 
