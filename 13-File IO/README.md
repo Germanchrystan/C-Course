@@ -195,6 +195,116 @@ If a newline character is read, it is retained in the string. A `\O` character w
 
 ## Reading formatted input from a file
 We can get formatted input from a file by using the standard `fscanf()` function
+~~~c
+int fscanf(FILE *stream, const char *format,...);
+~~~
 
+The first argument to this function is the pointer to a FILE object that identifies the stream.
+
+THe second argukment to this function is the format.
+A C string that contains one or more of the following items.
+- whitespace character
+- non-whitespace character
+- format specifiers.
+- usage is similar to scanf, but from a file
+
+The function returns the number of input items successfully matched and assigned.
+
+## Writing to a file
+The simplest write operatino is provied by the function `fputc()`. This writes a single character to a text file.
+
+~~~c
+int fputc(int ch, FILE *pfile);
+~~~
+
+The function writes the character specified by the first argument to the file identified by the second argument (file pointer).
+- Returns the character that was written if successful.
+- Returns EOF if failure.
+
+In practice characters are not usually written to a physical file one by one.
+The `putc()` function is equivalent to `fput()`. Requires the same arguments and the return type is the same. The difference between them is that putc() may be implemented in the standard library as a macro, whereas fputc() is a function.
+
+We can use the `fputs()` function to write to any file or stream
+
+~~~c
+int fputs(const char * str, FILE * pfile);
+~~~
+
+This function will write characters from a string until it reaches a `\0` character.
+It does not write the null terminator character to the file.
+- Can complicate reading back variable-length string from a file that have been writeen by fputs().
+- Expecting to write a line of text that has a newline character at the end.
+
+## Writing formatted output to a file
+The standard function for formatted output to a strem is `fprintf()`.
+~~~c
+int fprintf(FILE *stream, const char *format, ...);
+~~~
+
+If successful, the total number of characters written is returned. Otherwise, a negative number is returned.
+
+## Finding Positioning
+For many applications we need to be able to access data in a file other than sequential order.
+There are various functions that we can use to access data in random sequence.
+
+There are two aspects to file positioning.
+- finding out where we are in a file.
+- moving to a given point in a file.
+
+We can access a file at a random position regardless of whether we opened the file.
+
+### Finding where we are
+We have two functions to tell where we are in a file.
+- `ftell()` (`long ftell(FILE *pfile);`): This function accepts a file pointer as an argument and returns a long integer value that specifies the current position in the file.
+`long fpos = ftell()`
+The fpos variable now holds the current position in the file and we can use this to return to this position at any subsequent time.
+Value is the **offset in bytes** from the beginning of the file.
+
+- `fgetpos()`: The second function providing information on the current file position is a little more complicated.
+`int fgetpos(FILE * pfile, fpos_t * position);`
+The first parameter is a file pointer.
+The second parameter is a pointer to a type that is defined in `stdio.h`. fpos_t is a type that is able to record every position within a file.
+
+The `fgetpos()` function is designed to be used with the positioning function `fsetpos()`
+
+The `fgetpos()` function stores the current position and file state information for the file in position and returns 0 if the operation is successful. Returns a nonzero integer value for failure.
+
+~~~c
+fpos_t here;
+fgetpos(pfile; &here);
+~~~
+
+The aboce recors the current file position in the variable here.
+We must declare a variable of type `fpos_t`. Cannot declare a pointer of type `fpos_t*` because there will not be any memory allocated to store the position data.
+
+### Setting a position in a file.
+As a complement to `ftell()`, we have the `fseek()` function.
+
+`int fseek(FILE *pfile, long offset, int origin);`
+
+- The first parameter is a pointer to the file we are repositioning.
+- The second and third parameters define where we want to go in the file.
+  - The second parameter is an offset from a reference point specified by the third parameter.
+  - Reference point can be one of three values that are specified by the predefined names
+    * `SEEK_SET` - defines the beginning of the file.
+    * `SEEK_CUR` - defines the current position in the file
+    * `SEEK_END` - defines the end of the file.
+- for a text mode file, the second argument must be a value returned by `ftell()`.
+
+The third argument for text mode files must be `SEEK_SET`.
+  - for text files, all operations with `fseek()` are performed with reference to the beginning of the file.
+  - for binary files, the offset argument is simply a relative byte count. Can therefore supply positive or negative values for the offset when the reference point is specified as `SEEK_CUR`
+
+#### fsetpos()
+We have the `fsetpos()` function to go with `fgetpos()`
+
+`int fsetpos(FILE *pfile, const fpos_t *position);`
+
+The first parameter is a pointer to the open file.
+The second is a pointer of the fpos_t type. The position that is stored at the address was obtained by calling `fgetpos()`. The variable here was previously set by a call to `fgetpos()`.
+
+The `fsetpos()` returns a nonzero value on error or 0 when it succeeds.
+
+This function is designed to work with a value that is returned by fgetpos(). We can only use it to get to a place in a file that we have been before, while `fseek()` allows us to go to any position just by specifying the appropriate offset
 
 
